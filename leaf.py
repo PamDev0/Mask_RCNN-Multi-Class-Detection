@@ -162,7 +162,7 @@ class CustomDataset(utils.Dataset):
         # Convert polygons to a bitmap mask of shape
         # [height, width, instance_count]
         info = self.image_info[image_id]
-        mask = np.zeros(2048, 1024, len(info["polygons"])],
+        mask = np.zeros([2048], [1024], len(info["polygons"]),
                         dtype=np.uint8)
         for i, p in enumerate(info["polygons"]):
             # Get indexes of pixels inside the polygon and set them to 1
