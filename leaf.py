@@ -127,7 +127,7 @@ class CustomDataset(utils.Dataset):
             # The if condition is needed to support VIA versions 1.x and 2.x.
             polygons = [r['shape_attributes'] for r in a['regions'].values()]
             objects = [s['region_attributes'] for s in a['regions'].values()]
-            class_ids = [int(n['custom']) for n in objects]
+            # class_ids = [int(n['custom']) for n in objects]
 			# load_mask() needs the image size to convert polygons to masks.
             # Unfortunately, VIA doesn't include it in JSON, so we must read
             # the image. This is only managable since the dataset is tiny.
@@ -136,16 +136,18 @@ class CustomDataset(utils.Dataset):
             # for n in multi_numbers:
             
             image_path = os.path.join(dataset_dir, a['filename'])
-            image = skimage.io.imread(image_path)
-            height, width = image.shape[:2]
+            if (os.path.isfile(image_path)):
+                image = skimage.io.imread(image_path)
+                height, width = image.shape[:2]
 
-            self.add_image(
-                "custom",
-                image_id=a['filename'],  # use file name as a unique image id
-                path=image_path,
-                width=2048, height=1024,
-                polygons=polygons,
-				class_ids=class_ids)
+                self.add_image(
+                    "custom",
+                    image_id=a['filename'],  # use file name as a unique image id
+                    path=image_path,
+                    width=2048, height=1024,
+                    polygons=polygons)
+            else:
+                pass
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
@@ -158,7 +160,7 @@ class CustomDataset(utils.Dataset):
         image_info = self.image_info[image_id]
         if image_info["source"] != "custom":
             return super(self.__class__, self).load_mask(image_id)
-        class_ids = image_info['class_ids']
+        #class_ids = image_info['class_ids']
         # Convert polygons to a bitmap mask of shape
         # [height, width, instance_count]
         info = self.image_info[image_id]
@@ -172,9 +174,9 @@ class CustomDataset(utils.Dataset):
         # Return mask, and array of class IDs of each instance. Since we have
         # one class ID only, we return an array of 1s
         # class_ids=np.array([self.class_names.index(shapes[0])])
-        print("info['class_ids']=", info['class_ids'])
-        class_ids = np.array(class_ids, dtype=np.int32)
-        return mask, class_ids #[mask.shape[-1]] #np.ones([mask.shape[-1]], dtype=np.int32)#class_ids.astype(np.int32)
+        # print("info['class_ids']=", info['class_ids'])
+        # = np.array(class_ids, dtype=np.int32)
+        return mask #[mask.shape[-1]] #np.ones([mask.shape[-1]], dtype=np.int32)#class_ids.astype(np.int32)
 
     def image_reference(self, image_id):
         """Return the path of the image."""
