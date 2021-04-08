@@ -81,7 +81,7 @@ class CustomConfig(Config):
 
 class CustomDataset(utils.Dataset):
 
-    def load_custom(self, dataset_dir, subset):
+    def load_custom(self, subset):
         """Load a subset of the Balloon dataset.
         dataset_dir: Root directory of the dataset.
         subset: Subset to load: train or val
@@ -94,7 +94,8 @@ class CustomDataset(utils.Dataset):
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
-        dataset_dir = os.path.join(dataset_dir, subset)
+        dataset_dir = os.path.join("/home/pam/Desktop/TCC_GITHUB/models/Mask_RCNN-Multi-Class-Detection/Leaf/", subset + "/")
+        print(dataset_dir)
 
         # Load annotations
         # VGG Image Annotator (up to version 1.6) saves each image in the form:
@@ -112,7 +113,7 @@ class CustomDataset(utils.Dataset):
         # }
         # We mostly care about the x and y coordinates of each region
         # Note: In VIA 2.0, regions was changed from a dict to a list.
-        annotations = json.load(open(os.path.join(dataset_dir, "via_region_data.json")))
+        annotations = json.load(open(os.path.join("/home/pam/Desktop/TCC_GITHUB/models/Mask_RCNN-Multi-Class-Detection/Leaf/","via_region_data.json")))
         annotations = list(annotations.values())  # don't need the dict keys
 
         # The VIA tool saves images in the JSON even if they don't have any
@@ -135,9 +136,9 @@ class CustomDataset(utils.Dataset):
             # num_ids = [n for n in multi_numbers['number'].values()]
             # for n in multi_numbers:
             
-            image_path = os.path.join(dataset_dir, a['filename'])
+            image_path = os.path.join("/home/pam/Desktop/TCC_GITHUB/models/Mask_RCNN-Multi-Class-Detection/Leaf/", a['filename'])
             if (os.path.isfile(image_path)):
-                image = skimage.io.imread(image_path)
+                image = skimage.io.imread(image_path, plugin='pil')
                 height, width = image.shape[:2]
 
                 self.add_image(
@@ -160,12 +161,15 @@ class CustomDataset(utils.Dataset):
         image_info = self.image_info[image_id]
         if image_info["source"] != "custom":
             return super(self.__class__, self).load_mask(image_id)
-        #class_ids = image_info['class_ids']
+        
+        class_ids = image_info['class_ids']
         # Convert polygons to a bitmap mask of shape
         # [height, width, instance_count]
+        
         info = self.image_info[image_id]
-        mask = np.zeros([2048], [1024], len(info["polygons"]),
-                        dtype=np.uint8)
+        
+        mask = np.zeros([[2048], [1024], len(info["polygons"])], dtype=np.uint8)
+        
         for i, p in enumerate(info["polygons"]):
             # Get indexes of pixels inside the polygon and set them to 1
             rr, cc = skimage.draw.polygon(p['all_points_y'], p['all_points_x'])
@@ -176,7 +180,7 @@ class CustomDataset(utils.Dataset):
         # class_ids=np.array([self.class_names.index(shapes[0])])
         # print("info['class_ids']=", info['class_ids'])
         # = np.array(class_ids, dtype=np.int32)
-        return mask #[mask.shape[-1]] #np.ones([mask.shape[-1]], dtype=np.int32)#class_ids.astype(np.int32)
+        return mask, class_ids #[mask.shape[-1]] #np.ones([mask.shape[-1]], dtype=np.int32)#class_ids.astype(np.int32)
 
     def image_reference(self, image_id):
         """Return the path of the image."""
@@ -298,7 +302,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', required=False,
                         metavar="/path/to/leaf/dataset/",
                         help='Directory of the Leaf dataset')
-    parser.add_argument('--weights', required=True,
+    parser.add_argument('--weights',
                         metavar="/path/to/weights.h5",
                         help="Path to weights .h5 file or 'coco'")
     parser.add_argument('--logs', required=False,
@@ -311,6 +315,7 @@ if __name__ == '__main__':
     parser.add_argument('--video', required=False,
                         metavar="path or URL to video",
                         help='Video to apply the color splash effect on')
+
     args = parser.parse_args()
 
     # Validate arguments
