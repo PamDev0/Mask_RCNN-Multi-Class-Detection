@@ -1,0 +1,37 @@
+from mrcnn import model as modellib, utils
+from matplotlib import pyplot as plt
+from mrcnn.config import Config
+from PIL import Image, ImageTk
+from mrcnn import visualize
+import PySimpleGUI as sg
+from glob import glob
+import skimage.draw
+import numpy as np
+import datetime
+import random
+import json
+import leaf
+import cv2
+import sys
+import io
+import os
+
+ROOT_DIR = os.path.abspath("../../")
+sys.path.append(ROOT_DIR)  # To find local version of the library
+
+PRETRAINED_MODEL_PATH = "/content/drive/MyDrive/MundodasPlantas/Logs/custom20210412T2057/mask_rcnn_custom_0030.h5"
+IMAGE_DIR = "/content/Mask_RCNN-Multi-Class-Detection/Leaf/val/"
+
+def get_img_data(f, maxsize=(850, 500), first=False):
+    """Generate image data using PIL
+    """
+    img = Image.open(f)
+    img.thumbnail(maxsize)
+    if first:                     # tkinter is inactive the first time
+        bio = io.BytesIO()
+        img.save(bio, format="PNG")
+        del img
+        return bio.getvalue()
+    img = ImageTk.PhotoImage(img)
+    return img
+
