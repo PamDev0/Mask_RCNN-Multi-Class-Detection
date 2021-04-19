@@ -16,11 +16,11 @@ import sys
 import io
 import os
 
-ROOT_DIR = os.path.abspath("../../")
+ROOT_DIR = os.path.abspath("../../../")
 sys.path.append(ROOT_DIR)  # To find local version of the library
 
-PRETRAINED_MODEL_PATH = "/content/drive/MyDrive/MundodasPlantas/Logs/custom20210412T2057/mask_rcnn_custom_0030.h5"
-IMAGE_DIR = "/content/Mask_RCNN-Multi-Class-Detection/Leaf/val/"
+#PRETRAINED_MODEL_PATH = "/content/drive/MyDrive/MundodasPlantas/Logs/custom20210412T2057/mask_rcnn_custom_0030.h5"
+#IMAGE_DIR = "/content/Mask_RCNN-Multi-Class-Detection/Leaf/val/"
 
 def get_img_data(f, maxsize=(850, 500), first=False):
     """Generate image data using PIL
