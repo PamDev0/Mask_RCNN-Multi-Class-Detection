@@ -10,7 +10,6 @@ import datetime
 import random
 import json
 import leaf
-import cv2
 import sys
 import tk
 import io
