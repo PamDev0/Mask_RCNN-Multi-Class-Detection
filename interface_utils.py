@@ -1,7 +1,7 @@
 from mrcnn import model as modellib, utils
 from matplotlib import pyplot as plt
 from mrcnn.config import Config
-from PIL import Image, ImageTk
+from PIL import *
 from mrcnn import visualize
 from glob import glob
 import skimage.draw
