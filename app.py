@@ -27,11 +27,11 @@ if pressed:
     config = InferenceConfig()
     config.display()
 
-    weights = ""
-    weights_path = os.path.dirname("")
+    weights = ".../Mask_RCNN-Multi-Class-Detection/custom20210415T0038_mask_rcnn_custom_0029.h5"
+    weights_path = ".../Mask_RCNN-Multi-Class-Detection/"
 
     model = modellib.MaskRCNN(mode="inference", config=config, model_dir=weights_path)
-    model_path = ""
+    model_path = weights
     model.load_weights(model_path, by_name=True)
     class_names = ['BG', 'leaf', 'rust', 'background']
     test_image = skimage.io.imread(filename)
