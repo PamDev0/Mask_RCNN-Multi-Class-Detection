@@ -106,8 +106,8 @@ def display_instances(image, boxes, masks, class_ids, class_names,
 
     # If no axis is passed, create one and automatically call show()
     auto_show = False
-    if not ax1:
-        _, ax1 = plt.subplots(1, 2, figsize=figsize)
+    if not ax:
+        _, ax = plt.subplots(1, figsize=figsize)
         auto_show = false
 
     # Generate random colors
@@ -115,10 +115,10 @@ def display_instances(image, boxes, masks, class_ids, class_names,
 
     # Show area outside image boundaries.
     height, width = image.shape[:2]
-    ax1.set_ylim(height + 10, -10)
-    ax1.set_xlim(-10, width + 10)
-    ax1.axis('off')
-    ax1.set_title(title)
+    ax.set_ylim(height + 10, -10)
+    ax.set_xlim(-10, width + 10)
+    ax.axis('off')
+    ax.set_title(title)
 
     masked_image = image.astype(np.uint32).copy()
     for i in range(N):
@@ -133,7 +133,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             p = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2,
                                 alpha=0.7, linestyle="dashed",
                                 edgecolor=color, facecolor='none')
-            ax1.add_patch(p)
+            ax.add_patch(p)
 
         # Label
         if not captions:
@@ -144,7 +144,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             caption = "{} {:.3f}".format(label, score) if score else label
         else:
             caption = captions[i]
-        ax1.text(x1, y1 + 8, caption,
+        ax.text(x1, y1 + 8, caption,
                 color='w', size=11, backgroundcolor="none")
 
         # Mask
@@ -162,9 +162,8 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             # Subtract the padding and flip (y, x) to (x, y)
             verts = np.fliplr(verts) - 1
             p = Polygon(verts, facecolor="none", edgecolor=color)
-            ax1.add_patch(p)
-    ax1.imshow(masked_image.astype(np.uint8))
-    ax2.imshow(image)
+            ax.add_patch(p)
+    ax.imshow(masked_image.astype(np.uint8))
 
     if auto_show:
         plt.show()
