@@ -11,7 +11,6 @@ import random
 import json
 import leaf
 import sys
-import tk
 import io
 import os
 
