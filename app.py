@@ -33,7 +33,7 @@ if pressed:
     model = modellib.MaskRCNN(mode="inference", config=config, model_dir=weights_path)
     model_path = weights
     model.load_weights(model_path, by_name=True)
-    class_names = ['BG', 'leaf', 'rust', 'background']
+    class_names = ['BG', 'rust', 'background']
     test_image = skimage.io.imread(filename)
     print(filename)
     predictions = model.detect([test_image], verbose=1) # We are replicating the same image to fill up the batch_size
