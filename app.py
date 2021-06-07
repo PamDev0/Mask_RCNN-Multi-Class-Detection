@@ -31,11 +31,10 @@ thresh_slider = st.sidebar.slider(
 
 pressed = left_column.button('Predict!')
 if pressed:
-<<<<<<< HEAD
     st.write("Predicting...")
     start = time.time()
 
-    weights = ''
+    weights = '/content/mask_rcnn_custom_0033.h5' # colab path
 
     splash_image = inference(uploaded_file, weights)
 
@@ -48,51 +47,11 @@ if pressed_2:
     st.write("Removing background from predicted image...")
     no_bg = remove_bg_from_image(splash_image)
     st.image(no_bg)
-
-# botão save
-# https://www.reddit.com/r/PySimpleGUI/comments/eewt6t/saving_a_graph/
-# plot original + predicted
-=======
-    st.write("Classifying...")
-    class InferenceConfig(leaf.CustomConfig):
-
-        GPU_COUNT = 1
-        IMAGES_PER_GPU = 1
-    config = InferenceConfig()
-    config.display()
-
-    weights = ".../Mask_RCNN-Multi-Class-Detection/custom20210415T0038_mask_rcnn_custom_0029.h5"
-    weights_path = ".../Mask_RCNN-Multi-Class-Detection/"
-
-    model = modellib.MaskRCNN(mode="inference", config=config, model_dir=weights_path)
-    model_path = weights
-    model.load_weights(model_path, by_name=True)
-    class_names = ['BG', 'rust', 'background']
-    test_image = skimage.io.imread(filename)
-    print(filename)
-    predictions = model.detect([test_image], verbose=1) # We are replicating the same image to fill up the batch_size
-    print(predictions)
-    p = predictions[0]
-    visualization = visualize.display_instances(test_image, p['rois'], p['masks'], p['class_ids'], 
-                                                        class_names, p['scores'])
-    print("IHA")
-
-    st.image(visualization)
-
-        # botão save
-        # https://www.reddit.com/r/PySimpleGUI/comments/eewt6t/saving_a_graph/
-        # plot original + predicted
-        # https://www.pyimagesearch.com/2014/09/15/python-compare-two-images/
->>>>>>> 59a5ee8e988b5fa673e1c6a84632a55a96d7c69e
-
+    
 expander = st.beta_expander("FAQ")
 expander.write("Trabalho de conclusão de curso. Engenharia Elétrica - 2021.1")
 
 # Streamlit widgets automatically run the script from top to bottom. Since
 # this button is not connected to any other logic, it just causes a plain
 # rerun.
-<<<<<<< HEAD
 st.button("Recomeçar")
-=======
-st.button("Re-run")
->>>>>>> 59a5ee8e988b5fa673e1c6a84632a55a96d7c69e
