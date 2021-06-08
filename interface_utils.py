@@ -51,7 +51,9 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # print("Running on {}".format(image_path))
         # Read image
         # image = skimage.io.imread(image_path)
-        image = Image.open(io.BytesIO(image_path))
+        #image = Image.open(image_path)
+        image = np.asarray(bytearray(image_path.read()), dtype=np.uint8)
+        image = cv2.imdecode(image, 1)
         # Detect objects
         r = model.detect([image], verbose=1)[0]
         # Color splash
