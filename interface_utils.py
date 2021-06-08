@@ -107,8 +107,6 @@ def inference(image, weights):
     image_path = image
     model_path = weights_path
         
-    assert image_path
-
     # Image or video?
     if image_path:
         # Run model detection and generate the color splash effect
