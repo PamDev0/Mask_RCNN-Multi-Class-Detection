@@ -22,7 +22,7 @@ st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    #st.image(image, caption='Uploaded Image.', use_column_width=True)
+    st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
 
 left_column, right_column = st.beta_columns(2)
