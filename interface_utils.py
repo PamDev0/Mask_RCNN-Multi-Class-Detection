@@ -116,7 +116,7 @@ def inference(image, weights):
     #image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
-    r = model.detect(image_array, verbose=1)[0]
+    r = model.detect([image_array], verbose=1)[0]
     # Predict 
     p = r
     class_names = ['BG', 'rust', 'background']
