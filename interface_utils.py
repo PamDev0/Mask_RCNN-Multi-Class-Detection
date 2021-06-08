@@ -50,14 +50,14 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         # print("Running on {}".format(image_path))
         # Read image
-        #image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+        image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
         # Detect objects
         r = model.detect([image_path], verbose=1)[0]
         # Color splash
         splash = color_splash(image_path, r['masks'])
         # Save output
-        file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
-        skimage.io.imsave("/content/sample_data" + file_name, splash)
+        file_name = "splash.png".format(datetime.datetime.now())
+        skimage.io.imsave("/content/" + file_name, splash)
 
 def inference(image, weights):
     
@@ -111,7 +111,7 @@ def inference(image, weights):
     # Run model detection and generate the color splash effect
     # print("Running on {}".format(image_path))
     # Read image
-    #image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+    image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
 
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
