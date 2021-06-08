@@ -20,9 +20,8 @@ from keras.preprocessing import image
 
 def load_image(img):
 
-    img = Image.open(io.BytesIO(img))
-    img = img.convert('RGB')
-    img = image.img_to_array(img)
+    image_data = img.read()
+    img = Image.load_img(image_data)
     return img
 
 st.title("Upload + Segmentation")
