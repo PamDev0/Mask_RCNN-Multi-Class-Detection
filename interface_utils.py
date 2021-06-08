@@ -108,28 +108,27 @@ def inference(image, weights):
     model_path = weights_path
         
     # Image or video?
-    if image_path:
-        # Run model detection and generate the color splash effect
-        # print("Running on {}".format(image_path))
-        # Read image
-        image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+    # Run model detection and generate the color splash effect
+    # print("Running on {}".format(image_path))
+    # Read image
+    image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
 
-        # Detect objects
-        loaded_model = model.load_weights(model_path, by_name=True)
-        r = model.detect([image], verbose=1)[0]
-        # Predict 
-        p = r
-        class_names = ['BG', 'rust', 'background']
+    # Detect objects
+    loaded_model = model.load_weights(model_path, by_name=True)
+    r = model.detect([image], verbose=1)[0]
+    # Predict 
+    p = r
+    class_names = ['BG', 'rust', 'background']
 
-        predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
+    predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
 
-        splash = color_splash(image, r['masks'])
-        splashed = display_images([splash], cols=1)
+    splash = color_splash(image, r['masks'])
+    splashed = display_images([splash], cols=1)
         
-        st.image([image, predict, splashed])
+    st.image([image, predict, splashed])
 
-        return splash
+    return splash
 
 def remove_bg_from_image(splash, thresh_slider):
      ## (1) Read
