@@ -23,6 +23,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image.', use_column_width=True)
+    save_uploadedfile(image)
     st.write("Image Uploaded :) \nReady to predict!")
 
 left_column, right_column = st.beta_columns(2)
@@ -40,7 +41,7 @@ if pressed:
 
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
     
-    splash_image = inference(image, weights)
+    splash_image = inference('/content/' + uploadedfile.name, weights)
 
     end = time.time()
     total_time_prediction = int((end - start))
