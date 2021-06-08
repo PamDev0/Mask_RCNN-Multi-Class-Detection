@@ -23,7 +23,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     img_array = np.array(image)
-
+    st.write(img_array)
     #st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
 
