@@ -113,24 +113,21 @@ def inference(image, weights):
     # Read image
     #image = skimage.io.imread(image_path)
     image_array = np.asarray(image)
-    # Normalize the image
-    normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
-    # Load the image into the array
     #image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
-    r = model.detect([normalized_image_array], verbose=1)[0]
+    r = model.detect(image_array, verbose=1)[0]
     # Predict 
     p = r
     class_names = ['BG', 'rust', 'background']
 
-    predict = visualize.display_instances(normalized_image_array, p['rois'], p['masks'], p['class_ids'], 
+    predict = visualize.display_instances(image_array, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
 
-    splash = color_splash(normalized_image_array, r['masks'])
+    splash = color_splash(image_array, r['masks'])
     splashed = display_images([splash], cols=1)
         
-    st.image([normalized_image_array, predict, splashed])
+    st.image([image_array, predict, splashed])
 
     return splash
 
