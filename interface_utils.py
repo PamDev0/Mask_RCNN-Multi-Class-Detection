@@ -51,6 +51,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # print("Running on {}".format(image_path))
         # Read image
         image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+        image = image.read()
         # Detect objects
         r = model.detect([image], verbose=1)[0]
         # Color splash
@@ -118,7 +119,7 @@ def inference(image, weights):
 
         # Detect objects
         loaded_model = model.load_weights(model_path, by_name=True)
-                
+        image = image.read()
         r = model.detect([image], verbose=1)[0]
         # Predict 
         p = r
