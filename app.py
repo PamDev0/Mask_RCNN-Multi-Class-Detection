@@ -14,11 +14,16 @@ import time
 import leaf
 import cv2
 import os
+from PIL import Image
+import io
+from keras.preprocessing import image
 
 def load_image(img):
-    im = Image.open(img)
-    image = np.array(im)
-    return image
+
+    img = Image.open(io.BytesIO(img_bytes))
+    img = img.convert('RGB')
+    img = image.img_to_array(img)
+    return img
 
 st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
