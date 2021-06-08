@@ -2274,11 +2274,11 @@ class MaskRCNN():
         self.log_dir = os.path.join(self.model_dir, "{}{:%Y%m%dT%H%M}".format(
             self.config.NAME.lower(), now))
         
-        assert self.mode == "training", "Create model in training mode."
+        if self.mode == "training":
 
-        # Create log_dir if not exists
-        if not os.path.exists(self.log_dir):
-            os.makedirs(self.log_dir)
+		# Create log_dir if not exists
+		if not os.path.exists(self.log_dir):
+		    os.makedirs(self.log_dir)
 
         # Path to save after each epoch. Include placeholders that get filled by Keras.
         self.checkpoint_path = os.path.join(self.log_dir, "mask_rcnn_{}_*epoch*.h5".format(
