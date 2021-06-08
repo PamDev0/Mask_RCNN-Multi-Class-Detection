@@ -50,18 +50,17 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         # print("Running on {}".format(image_path))
         # Read image
-        # image = skimage.io.imread(image_path)
+        image = skimage.io.imread(image_path)
         #image = Image.open(image_path)
-        image = np.asarray(bytearray(image_path.read()), dtype=np.uint8)
-        image = cv2.imdecode(image, 1)
+        #image = np.asarray(bytearray(image_path.read()), dtype=np.uint8)
+        #image = cv2.imdecode(image, 1)
         # Detect objects
         r = model.detect([image], verbose=1)[0]
         # Color splash
         splash = color_splash(image, r['masks'])
         # Save output
-        #file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
-        #skimage.io.imsave("/content/sample_data" + file_name, splash)
-    #print("Saved to ", "/content/drive/MyDrive/MundodasPlantas/masks_rcnn" + file_name)
+        file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
+        skimage.io.imsave("/content/sample_data" + file_name, splash)
 
 def inference(image, weights):
     
@@ -120,7 +119,9 @@ def inference(image, weights):
         # Read image
 
         # image = skimage.io.imread(image_path)
-        image = Image.open(io.BytesIO(image_path))
+        image = np.asarray(bytearray(image_path.read()), dtype=np.uint8)
+        image = cv2.imdecode(image, 1)
+        #image = Image.open(io.BytesIO(image_path))
 
         # Detect objects
         loaded_model = model.load_weights(model_path, by_name=True)
