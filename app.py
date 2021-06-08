@@ -21,9 +21,9 @@ from keras.preprocessing import image
 st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
-    image = Image.open(io.BytesIO(uploaded_file.content))
+    image = Image.open(io.BytesIO(uploaded_file))
     #img_array = np.array(image)
-    st.write(img_array)
+    st.write(image)
     #st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
 
