@@ -11,6 +11,7 @@ from glob import glob
 import skimage.draw
 import numpy as np
 import datetime
+import cv2
 import random
 import json
 import leaf
