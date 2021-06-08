@@ -126,8 +126,7 @@ def inference(image, weights):
 
     splash = color_splash(image_array, r['masks'])
     splashed = display_images([splash], cols=1)
-    image = Image.fromarray(np.uint8(image_array))   
-    st.image([image, predict, splashed])
+    st.image([predict, splashed])
 
     return splash
 
