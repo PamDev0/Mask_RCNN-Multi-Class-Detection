@@ -23,9 +23,9 @@ ROOT_DIR = os.path.abspath("../../../")
 sys.path.append(ROOT_DIR)  # To find local version of the library
 
 def save_uploadedfile(uploadedfile):
-     with open(uploadedfile.name,"wb") as f:
+     with open('/content/' + uploadedfile.name,"wb") as f:
          f.write(uploadedfile.getbuffer())
-     return st.success("Saved File:{}.".format(uploadedfile.name))
+     return st.success("Saved File: /content/{}.".format(uploadedfile.name))
 
 def color_splash(image, mask):
     """Apply color splash effect.
