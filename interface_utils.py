@@ -112,7 +112,6 @@ def inference(image, weights):
     # print("Running on {}".format(image_path))
     # Read image
     #image = skimage.io.imread(image_path)
-    image = img
     image_array = np.asarray(image)
     # Normalize the image
     normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
