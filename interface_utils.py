@@ -43,7 +43,7 @@ def color_splash(image, mask):
     return splash
 
 def detect_and_color_splash(model, image_path=None, video_path=None):
-    assert image_path
+    #assert image_path
 
     # Image or video?
     if image_path:
@@ -51,7 +51,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # print("Running on {}".format(image_path))
         # Read image
         #image = skimage.io.imread(image_path)
-        image = cv2.imread(image_path)
+        #image = cv2.imread(image_path)
         # Detect objects
         r = model.detect([image_path], verbose=1)[0]
         # Color splash
@@ -113,7 +113,7 @@ def inference(image, weights):
     # Read image
     #image = skimage.io.imread(image_path)
     st.write(image)
-    image = cv2.imread(image)
+    #image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
     r = model.detect([image], verbose=1)[0]
