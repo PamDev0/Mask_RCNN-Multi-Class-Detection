@@ -21,8 +21,8 @@ from keras.preprocessing import image
 st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    img_array = np.array(image)
+    image = Image.open(io.BytesIO(uploaded_file.content))
+    #img_array = np.array(image)
     st.write(img_array)
     #st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
@@ -42,7 +42,7 @@ if pressed:
 
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
 
-    splash_image = inference(img_array, weights)
+    splash_image = inference(image, weights)
 
     end = time.time()
     total_time_prediction = int((end - start))
