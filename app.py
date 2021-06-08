@@ -19,6 +19,9 @@ st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
+    image = np.array(im)
+    return image
+
     #st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
 
@@ -37,7 +40,7 @@ if pressed:
 
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
 
-    splash_image = inference(uploaded_file, weights)
+    splash_image = inference(image, weights)
 
     end = time.time()
     total_time_prediction = int((end - start))
