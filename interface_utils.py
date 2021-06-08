@@ -105,7 +105,6 @@ def inference(image, weights):
     
     model.load_weights(weights_path, by_name=True)
 
-    image_path = image
     model_path = weights_path
         
     # Image or video?
@@ -113,21 +112,22 @@ def inference(image, weights):
     # print("Running on {}".format(image_path))
     # Read image
     #image = skimage.io.imread(image_path)
-    image = cv2.imread(image_path)
+    st.write(image)
+    image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
-    r = model.detect([image_path], verbose=1)[0]
+    r = model.detect([image], verbose=1)[0]
     # Predict 
     p = r
     class_names = ['BG', 'rust', 'background']
 
-    predict = visualize.display_instances(image_path, p['rois'], p['masks'], p['class_ids'], 
+    predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
 
-    splash = color_splash(image_path, r['masks'])
+    splash = color_splash(image, r['masks'])
     splashed = display_images([splash], cols=1)
         
-    st.image([image_path, predict, splashed])
+    st.image([image, predict, splashed])
 
     return splash
 
