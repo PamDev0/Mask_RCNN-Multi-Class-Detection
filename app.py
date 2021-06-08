@@ -15,12 +15,15 @@ import leaf
 import cv2
 import os
 
+def load_image(img):
+    im = Image.open(img)
+    image = np.array(im)
+    return image
+
 st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    image = np.array(im)
-    return image
+    image = load_image(uploaded_file)
 
     #st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("Image Uploaded :) \nReady to predict!")
