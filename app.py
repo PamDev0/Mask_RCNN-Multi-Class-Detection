@@ -20,7 +20,7 @@ from keras.preprocessing import image
 
 def load_image(img):
 
-    img = Image.open(io.BytesIO(img_bytes))
+    img = Image.open(io.BytesIO(img))
     img = img.convert('RGB')
     img = image.img_to_array(img)
     return img
