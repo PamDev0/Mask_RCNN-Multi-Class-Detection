@@ -7,6 +7,7 @@ from mrcnn.model import MaskRCNN
 from mrcnn.utils import Dataset
 from interface_utils import *
 from mrcnn import visualize 
+from mrcnn.visualize import display_images
 import streamlit as st
 import numpy as np
 import time
