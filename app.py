@@ -19,8 +19,8 @@ st.title("Upload + Segmentation")
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
-    st.write("")
+    #st.image(image, caption='Uploaded Image.', use_column_width=True)
+    st.write("Image Uploaded :) \nReady to predict!")
 
 left_column, right_column = st.beta_columns(2)
 
@@ -41,7 +41,7 @@ if pressed:
 
     end = time.time()
     total_time_prediction = int((end - start))
-    print("Tempo decorrido da exeução da predição: " + str(total_time_prediction) + " segundos.")
+    st.write("Tempo decorrido da exeução da predição: " + str(total_time_prediction) + " segundos.")
     
 pressed_2 = right_column.button('Remove background!')
 if pressed_2:
