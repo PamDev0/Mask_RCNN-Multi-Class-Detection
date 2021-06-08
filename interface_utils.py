@@ -50,11 +50,11 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         # print("Running on {}".format(image_path))
         # Read image
-        image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+        #image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
         # Detect objects
-        r = model.detect([image], verbose=1)[0]
+        r = model.detect([image_path], verbose=1)[0]
         # Color splash
-        splash = color_splash(image, r['masks'])
+        splash = color_splash(image_path, r['masks'])
         # Save output
         file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
         skimage.io.imsave("/content/sample_data" + file_name, splash)
@@ -111,22 +111,22 @@ def inference(image, weights):
     # Run model detection and generate the color splash effect
     # print("Running on {}".format(image_path))
     # Read image
-    image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
+    #image = skimage.io.imread(image_path, plugin='pil', pilmode="RGB")
 
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
-    r = model.detect([image], verbose=1)[0]
+    r = model.detect([image_path], verbose=1)[0]
     # Predict 
     p = r
     class_names = ['BG', 'rust', 'background']
 
-    predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
+    predict = visualize.display_instances(image_path, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
 
-    splash = color_splash(image, r['masks'])
+    splash = color_splash(image_path, r['masks'])
     splashed = display_images([splash], cols=1)
         
-    st.image([image, predict, splashed])
+    st.image([image_path, predict, splashed])
 
     return splash
 
