@@ -24,7 +24,7 @@ sys.path.append(ROOT_DIR)  # To find local version of the library
 
 def save_uploadedfile(uploadedfile):
      img_array = np.array(uploadedfile)
-     cv2.imwrite('/content/out.jpg', img_array)
+     cv2.imwrite('/content/out.jpg', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
      return st.write('Temp image saved!')
 
 def color_splash(image, mask):
@@ -54,15 +54,15 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         # print("Running on {}".format(image_path))
         # Read image
-        image = skimage.io.imread(image_path)
-        #image = cv2.imread(image_path)
+        #image = skimage.io.imread(image_path)
+        image = cv2.imread(image_path)
         # Detect objects
         r = model.detect([image_path], verbose=1)[0]
         # Color splash
         splash = color_splash(image_path, r['masks'])
         # Save output
-        file_name = "splash.png".format(datetime.datetime.now())
-        skimage.io.imsave("/content/" + file_name, splash)
+        img_array = np.array(splash)
+        cv2.imwrite('/content/splashed.jpg', cv2.cvtColor(splash, cv2.COLOR_BGR2RGB))
 
 def inference(image, weights):
     
@@ -127,12 +127,13 @@ def inference(image, weights):
 
     predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
+    cv2.imwrite('/content/predicted.jpg', cv2.cvtColor(predict, cv2.COLOR_BGR2RGB))
 
     splash = color_splash(image, r['masks'])
-    splashed = display_images([splash], cols=1)
-    st.image([image, predict, splashed])
-
-    return splash
+    #splashed = display_images([splash], cols=1)
+    
+    #img_array = np.array(splash)
+    #cv2.imwrite('/content/splashed.jpg', cv2.cvtColor(splash, cv2.COLOR_BGR2RGB))
 
 def remove_bg_from_image(splash, thresh_slider):
      ## (1) Read
