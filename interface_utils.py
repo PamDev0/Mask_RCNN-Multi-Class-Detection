@@ -131,7 +131,7 @@ def inference(image, weights):
 
     predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
-    cv2.imwrite('/content/predicted.jpg', cv2.cvtColor(predict, cv2.COLOR_BGR2RGB))
+    cv2.imwrite('/content/predicted.jpg', predict)
 
     splash = color_splash(image, r['masks'])
     #splashed = display_images([splash], cols=1)
