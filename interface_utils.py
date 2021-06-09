@@ -172,7 +172,7 @@ def remove_bg_from_image(splash, thresh_slider):
     ## (4) Create mask and do bitwise-op
     mask = np.zeros(gray.shape[:-1],np.uint8)
     cv2.drawContours(mask, [cnt],-1, 255, -1)
-    dst = cv2.bitwise_and(splash, splash, mask=mask)
+    dst = cv2.bitwise_and(image, image, mask=mask)
 
     dst[mask == 0] = (255, 255, 255)
 
