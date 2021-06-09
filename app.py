@@ -50,8 +50,8 @@ if pressed:
 pressed_2 = right_column.button('Remove background!')
 if pressed_2:
     st.write("Removing background from predicted image...")
-    no_bg = remove_bg_from_image(splash_image)
-    st.image(no_bg)
+    no_bg = remove_bg_from_image('/content/splashed.jpg')
+    st.image('/content/no_bg.jpg')
     
 expander = st.beta_expander("FAQ")
 expander.write("Trabalho de conclusão de curso. Engenharia Elétrica - 2021.1")
