@@ -24,7 +24,7 @@ sys.path.append(ROOT_DIR)  # To find local version of the library
 
 def save_uploadedfile(uploadedfile):
      img_array = np.array(uploadedfile)
-     cv2.imwrite('/content/out.jpg', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+     cv2.imwrite('/content/out.jpg', cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB))
      return st.write('Temp image saved!')
 
 def color_splash(image, mask):
@@ -62,7 +62,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         splash = color_splash(image_path, r['masks'])
         # Save output
         img_array = np.array(splash)
-        cv2.imwrite('/content/splashed.jpg', cv2.cvtColor(splash, cv2.COLOR_BGR2RGB))
+        cv2.imwrite('/content/splashed.jpg', cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB))
 
 def inference(image, weights):
     
@@ -137,6 +137,8 @@ def inference(image, weights):
 
 def remove_bg_from_image(splash, thresh_slider):
      ## (1) Read
+     
+    image = cv2.imread(splash)
     gray = cv2.cvtColor(splash, cv2.COLOR_BGR2GRAY)
 
     ## (2) Threshold
@@ -170,8 +172,5 @@ def remove_bg_from_image(splash, thresh_slider):
 
     dst[mask == 0] = (255, 255, 255)
 
-    no_bg = display_images([dst], cols=1)
-    st.image(no_bg)
-
-
-
+    img_array = np.array(dst)
+    cv2.imwrite('/content/no_bg.jpg', cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB))
