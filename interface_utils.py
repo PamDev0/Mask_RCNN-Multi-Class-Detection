@@ -115,22 +115,22 @@ def inference(image, weights):
     # Run model detection and generate the color splash effect
     # print("Running on {}".format(image_path))
     # Read image
-    image = skimage.io.imread(image_path)
+    image = skimage.io.imread(image)
     #image_array = np.asarray(image)
     #image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
-    r = model.detect([image_array], verbose=1)[0]
+    r = model.detect([image], verbose=1)[0]
     # Predict 
     p = r
     class_names = ['BG', 'rust', 'background']
 
-    predict = visualize.display_instances(image_array, p['rois'], p['masks'], p['class_ids'], 
+    predict = visualize.display_instances(image, p['rois'], p['masks'], p['class_ids'], 
                             class_names, p['scores'])
 
-    splash = color_splash(image_array, r['masks'])
+    splash = color_splash(image, r['masks'])
     splashed = display_images([splash], cols=1)
-    st.image([predict, splashed])
+    st.image([image, predict, splashed])
 
     return splash
 
