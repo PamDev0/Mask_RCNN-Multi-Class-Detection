@@ -23,7 +23,7 @@ ROOT_DIR = os.path.abspath("../../../")
 sys.path.append(ROOT_DIR)  # To find local version of the library
 
 def save_uploadedfile(uploadedfile):
-     img_array = np.array(image)
+     img_array = np.array(uploadedfile)
      cv2.imwrite('/content/out.jpg', img_array)
      return st.write('Temp image saved!')
 
