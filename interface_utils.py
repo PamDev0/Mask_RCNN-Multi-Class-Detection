@@ -23,9 +23,9 @@ ROOT_DIR = os.path.abspath("../../../")
 sys.path.append(ROOT_DIR)  # To find local version of the library
 
 def save_uploadedfile(uploadedfile):
-     with open('/content/' + uploadedfile.name,"wb") as f:
-         f.write(uploadedfile.getbuffer())
-     return st.success("Saved File: /content/{}.".format(uploadedfile.name))
+     img_array = np.array(image)
+     cv2.imwrite('/content/out.jpg', img_array)
+     return st.write('Temp image saved!')
 
 def color_splash(image, mask):
     """Apply color splash effect.
@@ -54,7 +54,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         # print("Running on {}".format(image_path))
         # Read image
-        #image = skimage.io.imread(image_path)
+        image = skimage.io.imread(image_path)
         #image = cv2.imread(image_path)
         # Detect objects
         r = model.detect([image_path], verbose=1)[0]
@@ -115,8 +115,8 @@ def inference(image, weights):
     # Run model detection and generate the color splash effect
     # print("Running on {}".format(image_path))
     # Read image
-    #image = skimage.io.imread(image_path)
-    image_array = np.asarray(image)
+    image = skimage.io.imread(image_path)
+    #image_array = np.asarray(image)
     #image = cv2.imread(image)
     # Detect objects
     loaded_model = model.load_weights(model_path, by_name=True)
