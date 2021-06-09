@@ -143,7 +143,7 @@ def remove_bg_from_image(splash, thresh_slider):
      ## (1) Read
      
     image = cv2.imread(splash)
-    gray = cv2.cvtColor(splash, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     ## (2) Threshold
     th, threshed = cv2.threshold(gray, thresh_slider, 255, cv2.THRESH_BINARY_INV|cv2.THRESH_OTSU)
