@@ -43,7 +43,8 @@ if pressed:
     
     splash_image = inference('/content/out.jpg', weights)
     st.image('/content/predicted.jpg', caption='Predicted Image.', use_column_width=True)
-    #st.image('/content/splashed.jpg', caption='Uploaded Image.', use_column_width=True)
+    # other image
+    st.image('/content/splashed.jpg', caption='Splashed Image.', use_column_width=True)
 
     end = time.time()
     total_time_prediction = int((end - start))
@@ -52,7 +53,7 @@ if pressed:
 pressed_2 = right_column.button('Remove background!')
 if pressed_2:
     st.write("Removing background from predicted image...")
-    no_bg = remove_bg_from_image('/content/splashed.jpg')
+    no_bg = remove_bg_from_image('/content/splashed.jpg', thresh_slider)
     st.image('/content/no_bg.jpg')
     
 expander = st.beta_expander("FAQ")
