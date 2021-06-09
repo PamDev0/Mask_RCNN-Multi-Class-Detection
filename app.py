@@ -48,7 +48,7 @@ if pressed:
 
     end = time.time()
     total_time_prediction = int((end - start))
-    st.write("Tempo decorrido da exeução da predição: " + str(total_time_prediction) + " segundos.")
+    st.write("Tempo decorrido da execução da predição: " + str(total_time_prediction) + " segundos.")
     
 pressed_2 = right_column.button('Remove background!')
 if pressed_2:
