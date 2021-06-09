@@ -41,7 +41,7 @@ if pressed:
 
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
     
-    splash_image = inference('/content/' + uploadedfile.name, weights)
+    splash_image = inference('/content/out.jpg', weights)
 
     end = time.time()
     total_time_prediction = int((end - start))
