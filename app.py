@@ -43,7 +43,7 @@ if pressed:
     
     splash_image = inference('/content/out.jpg', weights)
     st.image('/content/predicted.jpg', caption='Predicted Image.', use_column_width=True)
-    st.image('/content/splashed.jpg', caption='Uploaded Image.', use_column_width=True)
+    #st.image('/content/splashed.jpg', caption='Uploaded Image.', use_column_width=True)
 
     end = time.time()
     total_time_prediction = int((end - start))
