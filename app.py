@@ -38,10 +38,12 @@ pressed = left_column.button('Predict!')
 if pressed:
     st.write("Predicting...")
     start = time.time()
-
+    
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
     
     splash_image = inference('/content/out.jpg', weights)
+    st.image('/content/predicted.jpg', caption='Predicted Image.', use_column_width=True)
+    st.image('/content/splashed.jpg', caption='Uploaded Image.', use_column_width=True)
 
     end = time.time()
     total_time_prediction = int((end - start))
