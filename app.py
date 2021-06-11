@@ -18,46 +18,40 @@ from PIL import Image
 import io
 from keras.preprocessing import image
 
-st.title("Upload + Segmentation")
-uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
+st.title("Segmentação e remoção de fundo")
+uploaded_file = st.file_uploader("Escolha uma imagem...", type=["png", "jpeg", "jpg", "tiff", "bmp"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
+    st.image(image, caption='Imagem original.', use_column_width=True)
     save_uploadedfile(image)
-    st.write("Image Uploaded :) \nReady to predict!")
+    st.write("Upload concluído com sucesso :)")
 
 left_column, right_column = st.beta_columns(2)
 
-# Add a slider to the sidebar:
-thresh_slider = st.sidebar.slider(
-    'Select a value for threshold',
-    0, 255
-)
-
-pressed = left_column.button('Predict!')
+pressed = left_column.button('Segmentar!')
 if pressed:
-    st.write("Predicting...")
+    st.write("Segmentação em andamento...")
     start = time.time()
     
     weights = '/content/mask_rcnn_custom_0033.h5' # colab path
     
     splash_image = inference('/content/out.jpg', weights)
-    st.image('/content/predicted.jpg', caption='Predicted Image.', use_column_width=True)
+    st.image('/content/predicted.jpg', caption='Imagem Segmentada.', use_column_width=True)
     # other image
-    st.image('/content/splashed.jpg', caption='Splashed Image.', use_column_width=True)
+    st.image('/content/splashed.jpg', caption='Ferrugem em evidência.', use_column_width=True)
 
     end = time.time()
     total_time_prediction = int((end - start))
     st.write("Tempo decorrido da execução da predição: " + str(total_time_prediction) + " segundos.")
     
-pressed_2 = right_column.button('Remove background!')
+pressed_2 = right_column.button('Remover o fundo!')
 if pressed_2:
-    st.write("Removing background from predicted image...")
-    no_bg = remove_bg_from_image('/content/splashed.jpg', thresh_slider)
-    st.image('/content/no_bg.jpg')
-    
-expander = st.beta_expander("FAQ")
-expander.write("Trabalho de conclusão de curso. Engenharia Elétrica - 2021.1")
+    st.write("Removendo fundo da imagem utilizando a API do remove.bg ...")
+    no_bg = remove_bg_from_image('/content/splashed.jpg')
+    st.image('/content/no-bg.jpg')
+    st.write('Processo finalizado.')
+expander = st.beta_expander("Sobre")
+expander.write("Para baixar a imagem, basta clicar com o lado direito do mouse encima da imagem e selecionar a opção de salvar.\nTrabalho de conclusão de curso. Engenharia Elétrica - 2021.1")
 
 # Streamlit widgets automatically run the script from top to bottom. Since
 # this button is not connected to any other logic, it just causes a plain
