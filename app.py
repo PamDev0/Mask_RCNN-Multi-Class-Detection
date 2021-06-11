@@ -48,7 +48,7 @@ pressed_2 = right_column.button('Remover o fundo!')
 if pressed_2:
     st.write("Removendo fundo da imagem utilizando a API do remove.bg ...")
     no_bg = remove_bg_from_image('/content/splashed.jpg')
-    st.image('/content/no-bg.jpg')
+    st.image('/content/splashed.jpg_no_bg.png')
     st.write('Processo finalizado.')
 expander = st.beta_expander("Sobre")
 expander.write("Para baixar a imagem, basta clicar com o lado direito do mouse encima da imagem e selecionar a opção de salvar.\nTrabalho de conclusão de curso. Engenharia Elétrica - 2021.1")
