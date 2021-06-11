@@ -3,7 +3,7 @@ from mrcnn import model as modellib, utils
 from matplotlib import pyplot as plt
 from PIL import *
 from mrcnn.visualize import display_images
-from remove-bg.removebg import *
+from remove_bg.removebg import *
 from mrcnn import visualize
 from mrcnn.model import MaskRCNN
 from mrcnn.utils import Dataset
