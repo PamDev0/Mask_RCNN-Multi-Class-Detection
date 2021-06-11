@@ -3,6 +3,7 @@ from mrcnn import model as modellib, utils
 from matplotlib import pyplot as plt
 from PIL import *
 from mrcnn.visualize import display_images
+from remove-bg.removebg import *
 from mrcnn import visualize
 from mrcnn.model import MaskRCNN
 from mrcnn.utils import Dataset
@@ -139,42 +140,6 @@ def inference(image, weights):
     #img_array = np.array(splash)
     #cv2.imwrite('/content/splashed.jpg', cv2.cvtColor(splash, cv2.COLOR_BGR2RGB))
 
-def remove_bg_from_image(splash, thresh_slider):
-     ## (1) Read
-     
-    image = cv2.imread(splash)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    ## (2) Threshold
-    th, threshed = cv2.threshold(gray, thresh_slider, 255, cv2.THRESH_BINARY_INV|cv2.THRESH_OTSU)
-
-    ## (3) Find the min-area contour
-    _cnts = cv2.findContours(threshed, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[-2]
-    cnts = sorted(_cnts, key=cv2.contourArea)
-    for cnt in cnts:
-        if cv2.contourArea(cnt) > 100:
-            break
-
-    gray = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-    #gray = cv2.cvtColor(gray, cv2.COLOR_BGR2RGB)
-
-    fill_color = [255, 255, 255] # any BGR color value to fill with
-    mask_value = 255          # 1 channel white (can be any non-zero uint8 value)
-
-    # our stencil - some `mask_value` contours on black (zeros) background, 
-    # the image has same height and width as `img`, but only 1 color channel
-    stencil  = np.zeros(gray.shape[:-1]).astype(np.uint8)
-    cv2.fillPoly(stencil, cnts, mask_value)
-
-    sel = stencil != mask_value # select everything that is not mask_value
-    gray[sel] = fill_color
-
-    ## (4) Create mask and do bitwise-op
-    mask = np.zeros(gray.shape[:-1],np.uint8)
-    cv2.drawContours(mask, [cnt],-1, 255, -1)
-    dst = cv2.bitwise_and(image, image, mask=mask)
-
-    dst[mask == 0] = (255, 255, 255)
-
-    img_array = np.array(dst)
-    cv2.imwrite('/content/no_bg.jpg', cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB))
+def remove_bg_from_image(splash):
+     rmbg = RemoveBg("zbe5XhJhhkaMvi75cUs9sAdu", "/content/error.log")
+     rmbg.remove_background_from_img_file("/content/splashed.jpg", bg_color = '#FFFFFF')
