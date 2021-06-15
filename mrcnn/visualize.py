@@ -165,7 +165,8 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
-    cv2.imwrite('/content/predicted.jpg', cv2.cvtColor(masked_image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+    #cv2.imwrite('/content/predicted.jpg', cv2.cvtColor(masked_image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+    plt.savefig('/content/predicted.jpg')
     if auto_show:
         plt.show()
 
