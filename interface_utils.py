@@ -26,7 +26,7 @@ sys.path.append(ROOT_DIR)  # To find local version of the library
 def save_uploadedfile(uploadedfile):
      img_array = np.array(uploadedfile)
      cv2.imwrite('/content/out.jpg', cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB))
-     return st.write('Temp image saved!')
+     return st.write('Imagem temporária salva!')
 
 def color_splash(image, mask):
     """Apply color splash effect.
